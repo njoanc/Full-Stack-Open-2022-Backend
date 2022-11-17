@@ -1,0 +1,33 @@
+{
+  "name": "full-stack-open-2022_backend",
+  "version": "1.0.0",
+  "description": "Full-Stack-Open_2022_Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njoanc/Full-Stack-Open-2022_Backend.git"
+  },
+  "keywords": [
+    "Backend",
+    "ExpresJs",
+    "REST",
+    "APIs"
+  ],
+  "author": "Jeanne d'Arc NYIRAMWIZA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/njoanc/Full-Stack-Open-2022_Backend/issues"
+  },
+  "homepage": "https://github.com/njoanc/Full-Stack-Open-2022_Backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
