@@ -1,5 +1,5 @@
 const express = require("express");
-const phonebook = require("./phonebook.json");
+let phonebook = require("./phonebook.json");
 
 const app = express();
 
@@ -14,22 +14,37 @@ app.get("/api/persons", (request, response) => {
 app.get("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   const data = phonebook.find((note) => note.id === id);
-
-  response.json(data);
+  if (!data) {
+    return response.status(404).send("The person not found");
+  }
+  return response.json(data);
 });
 
 app.post("/api/persons", (request, response) => {
+  const id = phonebook.length > 0 ? Math.max(...phonebook.map((n) => n.id)) : 0;
   const data = request.body;
-  phonebook.concat(data);
-  response.json(data);
+  data.id = id + 1;
+  // console.log(data.name);
+  if (!data.name || !data.number) {
+    return response.status(400).send("Name and phone number are required");
+  } else {
+    const result = phonebook.find((person) => person.name === data.name);
+    // console.log(result);
+    if (!result) {
+      phonebook = phonebook.concat(data);
+      return response.json(phonebook);
+    }
+
+    return response.status(400).send("Name must be unique");
+  }
 });
 
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
-  const data = phonebook.filter((note) => note.id !== id);
-  console.log(data);
+  phonebook.filter((note) => note.id !== id);
+  // console.log(data);
 
-  response.status(204).end();
+  return response.status(204).end();
 });
 
 app.get("/info", (response) => {
@@ -37,7 +52,7 @@ app.get("/info", (response) => {
   const currentTime = new Date();
   const date = currentTime.toGMTString();
 
-  response.json({
+  return response.json({
     message: `Phonebook has info for ${data.length} people`,
     date: date,
   });
