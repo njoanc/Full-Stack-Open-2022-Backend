@@ -32,7 +32,7 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-app.get("/info", (request, response) => {
+app.get("/info", (response) => {
   const data = phonebook;
   const currentTime = new Date();
   const date = currentTime.toGMTString();
