@@ -32,6 +32,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  },
-  "client  ": "cd Full-Stack-Open-2022/part2/phonebook && npm run start"
+  }
 }
