@@ -1,9 +1,12 @@
 const express = require("express");
-let phonebook = require("./phonebook.json");
+// let phonebook = require("./phonebook.json");
 const fs = require("fs");
 const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
+require("dotenv").config();
+const Phonebook = require("./models/phonebook");
+const { notEqual } = require("assert");
 
 const app = express();
 
@@ -20,43 +23,72 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.json());
 app.use(cors());
 
-app.get("/api/persons", (request, response) => {
-  response.json(phonebook);
-});
+const errorHandler = (error, request, response, next) => {
+  console.log(error.message);
 
-app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const data = phonebook.find((person) => person.id === id);
-  if (!data) {
-    return response.status(404).send("The person not found");
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
   }
-  return response.json(data);
+
+  next(error);
+};
+app.use(errorHandler);
+
+app.get("/api/persons", (request, response) => {
+  Phonebook.find({}).then((phonebook) => {
+    response.json(phonebook);
+  });
 });
 
-app.post("/api/persons", (request, response) => {
-  const id = phonebook.length > 0 ? Math.max(...phonebook.map((n) => n.id)) : 0;
+app.get("/api/persons/:id", (request, response, next) => {
+  Phonebook.findById(request.params.id)
+    .then((person) => {
+      if (person) {
+        response.json(person);
+      } else {
+        return response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+});
+
+app.post("/api/persons", (request, response, next) => {
   const data = request.body;
-  data.id = id + 1;
-  // console.log(data.name);
+
   if (!data.name || !data.number) {
     return response.status(400).send("Name and phone number are required");
   } else {
-    const result = phonebook.find((person) => person.name === data.name);
-    // console.log(result);
-    if (!result) {
-      phonebook = phonebook.concat(data);
-      return response.json(phonebook);
-    }
-    return response.status(400).send("Name must be unique");
+    const person = new Phonebook({
+      name: data.name,
+      number: data.number,
+    });
+
+    person.save().then((item) => {
+      response.json(item);
+    });
   }
 });
 
-app.delete("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  phonebook = phonebook.filter((person) => person.id !== id);
-  // console.log(data);
+app.put("/api/persons/:id", (request, response, next) => {
+  const body = request.body;
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
 
-  return response.status(204).end();
+  Phonebook.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then((item) => {
+      response.json(item);
+    })
+    .catch((error) => next(error));
+});
+
+app.delete("/api/persons/:id", (request, response, next) => {
+  Phonebook.findByIdAndRemove(request.params.id)
+    .then((person) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
 app.get("/info", (response) => {
@@ -75,7 +107,7 @@ const unkownEndpoint = (request, response) => {
 };
 app.use(unkownEndpoint);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
