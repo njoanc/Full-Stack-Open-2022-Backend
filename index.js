@@ -3,7 +3,6 @@ let phonebook = require("./phonebook.json");
 const fs = require("fs");
 const path = require("path");
 const morgan = require("morgan");
-require("dotenv").config();
 const cors = require("cors");
 
 const app = express();
@@ -77,10 +76,6 @@ const unkownEndpoint = (request, response) => {
 app.use(unkownEndpoint);
 
 const PORT = process.env.PORT || 3001;
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-}
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

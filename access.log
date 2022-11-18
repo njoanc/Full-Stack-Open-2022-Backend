@@ -76,3 +76,8 @@
 ::ffff:127.0.0.1 - - [17/Nov/2022:14:49:08 +0000] "GET /api/persons HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
 ::ffff:127.0.0.1 - - [17/Nov/2022:14:49:30 +0000] "POST /api/persons HTTP/1.1" 200 275 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
 ::ffff:127.0.0.1 - - [17/Nov/2022:17:54:43 +0000] "GET /api/persons HTTP/1.1" 200 275 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [18/Nov/2022:07:55:54 +0000] "GET / HTTP/1.1" 404 28 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [18/Nov/2022:07:56:02 +0000] "GET /api/persons HTTP/1.1" 200 223 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [18/Nov/2022:07:59:12 +0000] "GET /api/persons HTTP/1.1" 200 223 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [18/Nov/2022:07:59:35 +0000] "POST /api/persons HTTP/1.1" 200 268 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [18/Nov/2022:07:59:48 +0000] "PATCH /api/persons/5 HTTP/1.1" 404 28 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
