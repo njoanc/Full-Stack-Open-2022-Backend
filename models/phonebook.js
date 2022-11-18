@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const url = process.env.MONGO_URL;
 
 console.log("connected to", url);
@@ -14,8 +13,25 @@ mongoose
   });
 
 const phoneBookSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  number: {
+    type: String,
+    required: true,
+    minLength: 10,
+    maxLenght: 10,
+    unique: true,
+    // validate: {
+    //   validator: function (v) {
+    //     return /^(?(d{3}))?[- ]?(d{3})[- ]?(d{4})$/.test(v);
+    //   },
+
+    //   message: "Provided phone number is invalid",
+    // },
+  },
 });
 
 phoneBookSchema.set("toJSON", {
