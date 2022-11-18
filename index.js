@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const Phonebook = require("./models/phonebook");
-const { notEqual } = require("assert");
 
 const app = express();
 
