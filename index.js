@@ -10,6 +10,7 @@ const Phonebook = require("./models/phonebook");
 const app = express();
 
 //create a write stream (in append mode)
+
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
   { flags: "a" }

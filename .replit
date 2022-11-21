@@ -1,0 +1,6 @@
+run = "npm run dev"
+
+[nix]
+
+[nix.channel]
+channel = "stable-22_05"

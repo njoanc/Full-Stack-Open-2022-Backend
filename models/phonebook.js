@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const url = process.env.MONGO_URL;
+const mySecret = process.env['MONGO_URL']
 
-console.log("connected to", url);
+console.log("connected to", mySecret);
 
 mongoose
-  .connect(url)
+  .connect(mySecret)
   .then((result) => {
     console.log("connected to mongoDB");
   })
