@@ -54,7 +54,7 @@ app.get("/api/persons/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-app.post("/api/persons", (request, response, next) => {
+app.post("/api/persons", (request, response) => {
   const data = request.body;
 
   if (!data.name || !data.number) {
@@ -66,7 +66,7 @@ app.post("/api/persons", (request, response, next) => {
     });
 
     person.save().then((item) => {
-      response.json(item);
+      response.json(item).end();
     });
   }
 });
@@ -91,7 +91,7 @@ app.put("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
   Phonebook.findByIdAndRemove(request.params.id)
-    .then((person) => {
+    .then(() => {
       response.status(204).end();
     })
     .catch((error) => next(error));
