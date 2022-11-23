@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mySecret = process.env['MONGO_URL']
+const mySecret = process.env["MONGO_URL"];
 
 console.log("connected to", mySecret);
 
@@ -16,21 +16,21 @@ const phoneBookSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    required: [true, "User name required"],
   },
   number: {
     type: String,
     required: true,
     minLength: 10,
     maxLenght: 10,
-    unique: true,
     // validate: {
     //   validator: function (v) {
-    //     return /^(?(d{3}))?[- ]?(d{3})[- ]?(d{4})$/.test(v);
+    //     return regex.test(v);
     //   },
-
-    //   message: "Provided phone number is invalid",
+    //   message: (props) =>
+    //     `${props.value} is not a valid phone number! phone number should be valid like: (123) 456-7890,(123)456-7890,123-456-7890,1234567890`,
     // },
+    required: [true, "User phone number required"],
   },
 });
 
